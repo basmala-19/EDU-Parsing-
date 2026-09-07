@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EDU2 RAG — Educational Parsing &amp; Ingestion Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #17325C;
+    --navy-dark: #0E2444;
+    --teal: #169E92;
+    --teal-light: #EAFBF9;
+    --coral: #E8604C;
+    --coral-light: #FBEFEA;
+    --yellow: #F2B134;
+    --yellow-light: #FEF6E8;
+    --purple: #5B4B9E;
+    --purple-light: #F1ECFB;
+    --gray: #5A6472;
+    --light: #EEF2F6;
+    --mid: #C9D2DC;
+    --white: #ffffff;
+    --bg: #F3F6FA;
+    --card-shadow: 0 4px 16px rgba(15, 30, 60, 0.06);
+    --border-color: #E2E8F0;
+    --mono: 'Fira Code', Consolas, Menlo, monospace;
+    --pass: #15803d;
+    --fail: #b45309;
+    --pass-bg: #dcfce7;
+    --fail-bg: #fef3c7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--navy-dark); }
+  body { display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--teal) 100%);
+    color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(14, 36, 68, 0.15); flex-shrink: 0; z-index: 10;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-icon {
+    width: 38px; height: 38px; border-radius: 12px; background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .brand-text h1 { font-size: 16px; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
+  .brand-text p { font-size: 11px; opacity: 0.85; }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .badge-chip {
+    background: rgba(255,255,255,0.15); color: #fff; padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; border: 1px solid rgba(255,255,255,0.25);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .badge-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #888; display: inline-block; }
+  .dot-online  { background: #3ECF8E !important; }
+  .dot-offline { background: #E8604C !important; }
+
+  /* ── Main 3-Column Layout ────────────────────────────── */
+  main { flex: 1; display: grid; grid-template-columns: 360px 1fr 380px; min-height: 0; gap: 0; }
+  section { min-height: 0; display: flex; flex-direction: column; background: #fff; }
+
+  #left-panel  { border-right: 1px solid var(--border-color); padding: 18px; overflow-y: auto; gap: 16px; background: #FAFBFD; }
+  #center-panel{ border-right: 1px solid var(--border-color); min-width: 0; background: #ffffff; display: flex; flex-direction: column; }
+  #right-panel { padding: 18px; overflow-y: auto; gap: 16px; background: #FAFBFD; }
+
+  .panel-title {
+    font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--navy);
+    display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--light);
+    padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .panel-title span { display: flex; align-items: center; gap: 6px; }
+
+  /* ── Dropzone ────────────────────────────────────────── */
+  .dropzone {
+    border: 2px dashed var(--teal); border-radius: 14px; padding: 20px 16px;
+    text-align: center; cursor: pointer; background: var(--teal-light);
+    transition: all 0.2s ease;
+  }
+  .dropzone:hover  { background: #d6f6f2; transform: translateY(-1px); }
+  .dropzone.active { background: #c2f4ee; border-color: var(--navy); }
+  .dropzone-icon { font-size: 32px; margin-bottom: 6px; }
+  .dropzone-text { font-size: 12px; font-weight: 700; color: var(--navy); }
+  .dropzone-sub  { font-size: 10px; color: var(--gray); margin-top: 3px; }
+
+  /* ── Form Elements ───────────────────────────────────── */
+  .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .form-label { font-size: 11px; font-weight: 700; color: var(--navy); display: flex; justify-content: space-between; }
+  .form-control, .form-select {
+    width: 100%; border: 1.5px solid var(--mid); border-radius: 10px; padding: 8px 12px;
+    font-size: 12px; font-family: inherit; color: var(--navy-dark); background: #fff;
+    transition: border-color 0.2s;
+  }
+  .form-control:focus, .form-select:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 3px rgba(91,75,158,0.1); }
+
+  .btn {
+    background: var(--navy); color: #fff; border: none; border-radius: 10px; padding: 10px 16px;
+    font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;
+  }
+  .btn:hover { background: var(--navy-dark); transform: translateY(-1px); }
+  .btn-teal    { background: var(--teal); }
+  .btn-teal:hover { background: #128277; }
+  .btn-coral   { background: var(--coral); }
+  .btn-coral:hover { background: #d04f3c; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--mid); color: var(--navy); }
+  .btn-outline:hover { background: var(--light); }
+  .btn-sm { padding: 5px 10px; font-size: 10px; border-radius: 8px; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+  /* ── Book Card ───────────────────────────────────────── */
+  .book-card {
+    background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px;
+    padding: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  }
+  .book-card:hover  { border-color: var(--purple); transform: translateX(-2px); }
+  .book-card.active { border-color: var(--purple); background: var(--purple-light); box-shadow: 0 0 0 1px var(--purple) inset; }
+  .book-card-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .book-card-title { font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .book-card-meta  { font-size: 10px; color: var(--gray); display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .meta-tag { background: var(--light); padding: 2px 6px; border-radius: 6px; font-weight: 600; }
+  .tag-pass { background: var(--pass-bg); color: var(--pass); }
+  .tag-warn { background: var(--fail-bg); color: var(--fail); }
+  .tag-fail { background: #fee2e2; color: #b91c1c; }
+
+  /* ── Center Tabs ─────────────────────────────────────── */
+  .center-header {
+    padding: 12px 18px; border-bottom: 1px solid var(--border-color); background: #FAFBFD;
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  .tab-nav  { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tab-btn  {
+    background: transparent; border: 1.5px solid transparent; padding: 6px 14px;
+    border-radius: 8px; font-size: 12px; font-weight: 700; color: var(--gray);
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .tab-btn.active { background: #fff; border-color: var(--border-color); color: var(--navy); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+  .tab-content        { flex: 1; padding: 18px; overflow-y: auto; display: none; }
+  .tab-content.active { display: block; }
+
+  .document-text {
+    font-family: var(--mono); font-size: 12px; line-height: 1.7; background: #fafafa;
+    border: 1px solid var(--light); border-radius: 8px; padding: 10px; white-space: pre-wrap;
+    word-break: break-word; color: #1e293b;
+  }
+  .document-text.rtl { direction: rtl; text-align: right; font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 13px; }
+
+  /* ── Right Panel Stats ───────────────────────────────── */
+  .stat-card {
+    background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px;
+    padding: 12px; margin-bottom: 10px;
+  }
+  .stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+  .stat-val   { font-size: 14px; font-weight: 800; color: var(--navy); word-break: break-word; }
+  .kv-table   { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .kv-table td { padding: 6px 0; border-bottom: 1px dashed var(--light); }
+  .kv-table td:first-child { color: var(--gray); font-weight: 600; width: 45%; }
+  .kv-table td:last-child  { font-weight: 700; text-align: right; color: var(--navy); }
+
+  /* ── Quality Metric Row ──────────────────────────────── */
+  .q-row {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+    padding: 6px 0; border-bottom: 1px dashed var(--light); font-size: 11px;
+  }
+  .q-key  { color: var(--gray); font-weight: 600; }
+  .q-val  { font-weight: 800; text-align: right; font-size: 11px; }
+  .q-pass { color: var(--pass); }
+  .q-fail { color: #b91c1c; }
+  .q-warn { color: #b45309; }
+  .q-detail { font-size: 9.5px; font-weight: 400; color: var(--gray); margin-top: 1px; }
+
+  /* ── Progress Log ────────────────────────────────────── */
+  #progressLog {
+    margin-top: 10px; background: var(--navy-dark); border-radius: 10px; padding: 10px 12px;
+    font-family: var(--mono); font-size: 11px; color: #7dd3fc; max-height: 140px; overflow-y: auto;
+    display: none; line-height: 1.7;
+  }
+  #progressLog .log-line { display: block; }
+  #progressLog .log-ok   { color: #86efac; }
+  #progressLog .log-err  { color: #fca5a5; }
+  #progressLog .log-info { color: #7dd3fc; }
+
+  pre.raw-json {
+    background: #0f172a; color: #38bdf8; padding: 14px; border-radius: 10px;
+    font-family: var(--mono); font-size: 11.5px; line-height: 1.6; max-height: 420px;
+    overflow: auto; white-space: pre-wrap;
+  }
+
+  /* ── Spinner ─────────────────────────────────────────── */
+  .spinner {
+    display: inline-block; width: 13px; height: 13px; border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Empty State ─────────────────────────────────────── */
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--gray); font-size: 13px; }
+  .empty-state .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="brand">
+    <div class="brand-icon">📚</div>
+    <div class="brand-text">
+      <h1>EDU2 RAG Ingestion Console</h1>
+      <p>Curriculum Textbook Parsing · Educational Hierarchy · RAG-ready Export</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <span class="badge-chip">
+      <i class="dot" id="apiStatusDot"></i>
+      API: <strong id="apiStatusText">Checking…</strong>
+    </span>
+    <a href="/docs" target="_blank" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);padding:6px 12px;font-size:11px;">Swagger ↗</a>
+  </div>
+</header>
+
+<!-- Main Console -->
+<main>
+
+  <!-- ═══ LEFT PANEL ═══ -->
+  <section id="left-panel">
+    <div class="panel-title"><span>📤 Parse &amp; Ingest Textbook</span></div>
+
+    <!-- Dropzone -->
+    <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+      <div class="dropzone-icon">📄</div>
+      <div class="dropzone-text" id="dropzoneLabel">Click or drop a textbook PDF here</div>
+      <div class="dropzone-sub">Arabic or English · Born-Digital or Scanned</div>
+      <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileSelect(event)" />
+    </div>
+
+    <!-- OCR Engine Selector -->
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label">🔬 OCR Engine (for scanned PDFs)</label>
+      <select id="ocrEngineSelect" class="form-select" onchange="onOcrEngineChange()">
+        <option value="openrouter" selected>🤖 OpenRouter Vision (Qwen / Gemma / Gemini)</option>
+        <option value="auto">⚡ Auto (OpenRouter if configured, else Tesseract)</option>
+        <option value="tesseract">🖥️ Tesseract (Local, Offline CPU)</option>
+      </select>
+    </div>
+
+    <!-- OpenRouter Model & Key -->
+    <div id="geminiKeyGroup" class="form-group" style="display:none;">
+      <label class="form-label">
+        OpenRouter API Key
+        <a href="https://openrouter.ai/keys" target="_blank" style="font-size:9px;color:var(--teal);">Get key ↗</a>
+      </label>
+      <input type="password" id="openrouterApiKey" class="form-control" placeholder="sk-or-v1-…"
+             oninput="saveKeyToSession('OPENROUTER_API_KEY', this.value)" />
+
+      <label class="form-label" style="margin-top:8px;">OpenRouter Model</label>
+      <select id="openrouterModelSelect" class="form-select" onchange="saveKeyToSession('OPENROUTER_MODEL', this.value)">
+        <option value="qwen/qwen3.8-flash">⚡ Qwen 3.8 Flash (Fast &amp; Cheap Vision)</option>
+        <option value="google/gemma-4-31b-it">💎 Gemma 4 31B Instruct (High Precision Vision)</option>
+        <option value="google/gemma-4-26b-a4b-it">💎 Gemma 4 26B A4B (Ultra-fast Vision)</option>
+        <option value="google/gemini-2.5-flash">🤖 Gemini 2.5 Flash</option>
+      </select>
+      <div style="font-size:9.5px;color:var(--gray);margin-top:3px;">
+        Multimodal VLM for complex diagrams and scanned textbooks.
+      </div>
+    </div>
+
+    <!-- Ingest Action -->
+    <div style="margin-top:12px;">
+      <button class="btn btn-teal" id="startParseBtn" onclick="runIngestPipeline()" style="width:100%;" disabled>
+        <span>⚡ Start Parsing</span>
+      </button>
+
+      <!-- Progress Log -->
+      <div id="progressLog"></div>
+    </div>
+
+    <!-- Library -->
+    <div class="panel-title" style="margin-top:18px;">
+      <span>📚 Ingested Library (<span id="bookCount">0</span>)</span>
+      <button class="btn btn-outline btn-sm" onclick="loadLibrary()">↺ Refresh</button>
+    </div>
+    <div id="libraryList">
+      <div style="font-size:11px;color:var(--gray);text-align:center;padding:16px;">Loading catalog…</div>
+    </div>
+  </section>
+
+
+  <!-- ═══ CENTER PANEL ═══ -->
+  <section id="center-panel">
+    <div class="center-header">
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="markdown" onclick="switchTab(event,'markdown')">📝 Raw Markdown</button>
+        <button class="tab-btn"        data-tab="ragmd"    onclick="switchTab(event,'ragmd')">🎯 RAG Markdown</button>
+        <button class="tab-btn"        data-tab="tree"     onclick="switchTab(event,'tree')">🌳 Hierarchy</button>
+        <button class="tab-btn"        data-tab="raw"      onclick="switchTab(event,'raw')">🔬 Schema JSON</button>
+      </div>
+      <span id="activeBookTitle" style="font-size:12px;font-weight:700;color:var(--navy);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">No document selected</span>
+    </div>
+
+    <!-- Tab: Raw Markdown -->
+    <div id="tab-markdown" class="tab-content">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+        <button class="btn btn-outline btn-sm" onclick="downloadActiveMarkdown()">📥 Download Raw Markdown</button>
+      </div>
+      <pre id="markdownView" class="document-text" style="max-height:calc(100vh - 200px);overflow-y:auto;background:#fff;">No markdown loaded.</pre>
+    </div>
+
+    <!-- Tab: RAG Markdown -->
+    <div id="tab-ragmd" class="tab-content">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:11px;color:var(--gray);">Optimized hierarchy with headings for EDU-RAG ingestion</span>
+        <button class="btn btn-outline btn-sm" onclick="downloadActiveRagMarkdown()">📥 Download .rag.md</button>
+      </div>
+      <pre id="ragMarkdownView" class="document-text" style="max-height:calc(100vh - 200px);overflow-y:auto;background:#fff;">No RAG markdown loaded.</pre>
+    </div>
+
+    <!-- Tab: Hierarchy Tree -->
+    <div id="tab-tree" class="tab-content">
+      <div id="treeContainer"><div class="empty-state"><span class="icon">🌳</span>No educational document loaded.</div></div>
+    </div>
+
+    <!-- Tab: Raw JSON -->
+    <div id="tab-raw" class="tab-content">
+      <pre id="rawJsonView" class="raw-json">{}</pre>
+    </div>
+  </section>
+
+  <!-- ═══ RIGHT PANEL ═══ -->
+  <section id="right-panel">
+    <div class="panel-title"><span>📋 Document Provenance</span></div>
+
+    <div class="stat-card">
+      <div class="stat-label">Document Title</div>
+      <div class="stat-val" id="metaDocTitle">—</div>
+    </div>
+
+    <table class="kv-table">
+      <tr><td>Subject / Grade:</td>    <td id="metaSubjectGrade">—</td></tr>
+      <tr><td>Language Detected:</td>  <td id="metaLanguage">—</td></tr>
+      <tr><td>Parser Engine:</td>      <td id="metaParser">—</td></tr>
+      <tr><td>Document Type:</td>      <td id="metaDocType">—</td></tr>
+      <tr><td>Total Pages:</td>        <td id="metaPages">—</td></tr>
+      <tr><td>Chapters / Lessons:</td> <td id="metaChapters">—</td></tr>
+      <tr><td>Quality Status:</td>     <td id="metaQuality">—</td></tr>
+      <tr><td>SHA-256 ID:</td>         <td id="metaSha" style="font-family:var(--mono);font-size:10px;">—</td></tr>
+    </table>
+
+    <div class="panel-title" style="margin-top:16px;"><span>🎯 OCR &amp; Quality Metrics</span></div>
+    <div id="qualityMetricsBox">
+      <div style="font-size:11.5px;color:var(--gray);">Select a document to inspect quality report.</div>
+    </div>
+
+    <div class="panel-title" style="margin-top:16px;"><span>💾 Export Artifacts</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn btn-teal"    onclick="downloadActiveRagMarkdown()" style="width:100%;justify-content:flex-start;">🎯 Document.rag.md (for EDU-RAG)</button>
+      <button class="btn btn-outline" onclick="downloadActiveEdoc()"        style="width:100%;justify-content:flex-start;">📦 EducationalDocument.json</button>
+      <button class="btn btn-outline" onclick="downloadActiveMarkdown()"    style="width:100%;justify-content:flex-start;">📄 Raw_Markdown.md</button>
+    </div>
+
+    <div class="panel-title" style="margin-top:16px;"><span>🗑️ Danger Zone</span></div>
+    <button class="btn btn-coral" id="deleteBookBtn" onclick="deleteActiveBook()" style="width:100%;" disabled>
+      Delete Selected Book
+    </button>
+  </section>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+let activeBookId   = null;
+let activeBookData = null;
+let selectedFile   = null;
+
+/* ═══════════════════════════════════════════════════════
+   OCR ENGINE & KEYS MANAGEMENT
+═══════════════════════════════════════════════════════ */
+function saveKeyToSession(key, val) {
+  if (val) {
+    sessionStorage.setItem(key, val);
+  } else {
+    sessionStorage.removeItem(key);
+  }
+}
+
+function onOcrEngineChange() {
+  const sel = document.getElementById('ocrEngineSelect').value;
+  document.getElementById('geminiKeyGroup').style.display = (sel === 'openrouter' || sel === 'auto') ? 'block' : 'none';
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  checkApiHealth();
+  loadLibrary();
+  initDropzone();
+  document.getElementById('ocrEngineSelect').value = 'openrouter';
+
+  // Restore session keys if any
+  const gmKey = sessionStorage.getItem('OPENROUTER_API_KEY');
+  const gmModel = sessionStorage.getItem('OPENROUTER_MODEL');
+
+  if (gmKey) document.getElementById('openrouterApiKey').value = gmKey;
+  if (gmModel && document.getElementById('openrouterModelSelect')) {
+    document.getElementById('openrouterModelSelect').value = gmModel;
+  }
+
+  onOcrEngineChange();
+});
+
+/* ═══════════════════════════════════════════════════════
+   DROPZONE
+═══════════════════════════════════════════════════════ */
+function initDropzone() {
+  const dz = document.getElementById('dropzone');
+  dz.addEventListener('dragover',  (e) => { e.preventDefault(); dz.classList.add('active'); });
+  dz.addEventListener('dragleave', ()  => dz.classList.remove('active'));
+  dz.addEventListener('drop', (e) => {
+    e.preventDefault(); dz.classList.remove('active');
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+  });
+}
+
+function handleFileSelect(event) {
+  if (event.target.files && event.target.files[0]) setFile(event.target.files[0]);
+}
+
+function setFile(file) {
+  selectedFile = file;
+  document.getElementById('dropzoneLabel').innerText = '📎 ' + file.name;
+  document.getElementById('startParseBtn').disabled = false;
+  logClear();
+}
+
+/* ═══════════════════════════════════════════════════════
+   PROGRESS LOG
+═══════════════════════════════════════════════════════ */
+function logClear() {
+  const el = document.getElementById('progressLog');
+  el.innerHTML = '';
+  el.style.display = 'none';
+}
+
+function logLine(msg, type = 'info') {
+  const el = document.getElementById('progressLog');
+  el.style.display = 'block';
+  const span = document.createElement('span');
+  span.className = `log-line log-${type}`;
+  span.textContent = msg;
+  el.appendChild(span);
+  el.scrollTop = el.scrollHeight;
+}
+
+/* ═══════════════════════════════════════════════════════
+   API HEALTH
+═══════════════════════════════════════════════════════ */
+async function checkApiHealth() {
+  const dot  = document.getElementById('apiStatusDot');
+  const text = document.getElementById('apiStatusText');
+  try {
+    const res  = await fetch('/api/v1/health');
+    const data = await res.json();
+    if (data.status === 'healthy') {
+      dot.className  = 'dot dot-online';
+      text.innerText = 'Online';
+      if (!data.openrouter_key_configured) {
+        text.innerText = 'Online · No VLM Key';
+      }
+    } else {
+      dot.className  = 'dot dot-offline';
+      text.innerText = 'Degraded';
+    }
+  } catch {
+    dot.className  = 'dot dot-offline';
+    text.innerText = 'Offline';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIBRARY
+═══════════════════════════════════════════════════════ */
+async function loadLibrary() {
+  try {
+    const res     = await fetch('/api/v1/storage/registry');
+    const library = await res.json();
+    renderLibrary(library);
+  } catch (err) {
+    console.error('Failed to load library:', err);
+  }
+}
+
+function renderLibrary(library) {
+  const container = document.getElementById('libraryList');
+  const books     = Object.values(library);
+  document.getElementById('bookCount').innerText = books.length;
+
+  if (books.length === 0) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--gray);text-align:center;padding:16px;">No textbooks in registry yet. Upload a PDF above!</div>';
+    return;
+  }
+
+  container.innerHTML = books.map(b => {
+    const qs  = (b.quality_status || 'UNKNOWN').toUpperCase();
+    const qcl = qs === 'PASS' ? 'tag-pass' : qs === 'WARN' ? 'tag-warn' : 'tag-fail';
+    return `
+    <div class="book-card ${activeBookId === b.book_id ? 'active' : ''}" onclick="selectBook('${b.book_id}')">
+      <div class="book-card-row">
+        <div class="book-card-title">${escHtml(b.document_title || b.file_name)}</div>
+      </div>
+      <div class="book-card-meta">
+        <span class="meta-tag">${(b.language || 'auto').toUpperCase()}</span>
+        <span class="meta-tag">${b.num_pages || 1}p</span>
+        <span class="meta-tag ${qcl}">${qs}</span>
+        <span class="meta-tag">${b.parser_used || 'unknown'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   SELECT BOOK
+═══════════════════════════════════════════════════════ */
+async function selectBook(bookId) {
+  activeBookId = bookId;
+  document.getElementById('deleteBookBtn').disabled = false;
+  await loadLibrary();   // re-render to highlight active card
+
+  try {
+    const res  = await fetch(`/api/v1/storage/book/${bookId}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    activeBookData = data;
+    renderBookDetails(data);
+  } catch (err) {
+    logLine('Failed to fetch book: ' + err.message, 'err');
+  }
+}
+
+function renderBookDetails(data) {
+  const rec = data.record || {};
+
+  // Header
+  const title = rec.document_title || rec.file_name || '(Untitled)';
+  document.getElementById('activeBookTitle').innerText = title;
+  document.getElementById('metaDocTitle').innerText    = title;
+  document.getElementById('metaSubjectGrade').innerText = `${rec.subject || 'General'} / ${rec.grade || 'Unspecified'}`;
+  document.getElementById('metaLanguage').innerText    = (rec.language || 'unknown').toUpperCase();
+  document.getElementById('metaParser').innerText      = rec.parser_used || '—';
+  document.getElementById('metaDocType').innerText     = rec.is_born_digital ? 'Born-Digital (Text)' : 'Scanned / Images';
+  document.getElementById('metaPages').innerText       = rec.num_pages || 1;
+  document.getElementById('metaChapters').innerText    = `${rec.chapter_count || 0} chapters`;
+  const qs  = (rec.quality_status || 'UNKNOWN').toUpperCase();
+  const qcl = qs === 'PASS' ? 'tag-pass' : qs === 'WARN' ? 'tag-warn' : 'tag-fail';
+  document.getElementById('metaQuality').innerHTML = `<span class="meta-tag ${qcl}">${qs}</span>`;
+  document.getElementById('metaSha').innerText     = rec.file_sha256 ? rec.file_sha256.slice(0, 20) + '…' : '—';
+
+  // Markdown tab
+  const md = data.raw_markdown || '';
+  const mdEl = document.getElementById('markdownView');
+  mdEl.innerText = md || 'No raw markdown saved.';
+  mdEl.className = 'document-text' + (isArabicDominant(md) ? ' rtl' : '');
+
+  // RAG Markdown tab
+  const ragMd = data.rag_markdown || '';
+  const ragMdEl = document.getElementById('ragMarkdownView');
+  if (ragMdEl) {
+    ragMdEl.innerText = ragMd || 'No RAG markdown saved.';
+    ragMdEl.className = 'document-text' + (isArabicDominant(ragMd) ? ' rtl' : '');
+  }
+
+  // Schema JSON tab
+  document.getElementById('rawJsonView').innerText =
+    JSON.stringify(data.educational_document || {}, null, 2);
+
+  // Quality metrics
+  renderQualityMetrics(data.quality_report || {});
+
+  // Educational hierarchy tree
+  renderEducationalTree(data.educational_document || {});
+}
+
+/* ═══════════════════════════════════════════════════════
+   QUALITY METRICS
+═══════════════════════════════════════════════════════ */
+function renderQualityMetrics(quality) {
+  const box = document.getElementById('qualityMetricsBox');
+
+  if (!quality || Object.keys(quality).length === 0) {
+    box.innerHTML = '<div style="font-size:11px;color:var(--gray);">No quality metrics available.</div>';
+    return;
+  }
+
+  box.innerHTML = Object.entries(quality).map(([key, val]) => {
+    // val can be: { status, detail } object OR a plain string/number
+    let status = '', detail = '';
+    if (val && typeof val === 'object') {
+      status = (val.status || '').toUpperCase();
+      detail = val.detail || val.message || '';
+    } else {
+      status = String(val).toUpperCase();
+    }
+    const cls = status === 'PASS' ? 'q-pass' : status === 'WARN' ? 'q-warn' : 'q-fail';
+    const label = key.replace(/_/g, ' ');
+    return `
+      <div class="q-row">
+        <div>
+          <div class="q-key">${escHtml(label)}:</div>
+          ${detail ? `<div class="q-detail">${escHtml(detail)}</div>` : ''}
+        </div>
+        <div class="q-val ${cls}">${status || '—'}</div>
+      </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   EDUCATIONAL HIERARCHY TREE
+═══════════════════════════════════════════════════════ */
+function renderEducationalTree(edoc) {
+  const container = document.getElementById('treeContainer');
+  const chapters  = edoc.chapters || [];
+  if (chapters.length === 0) {
+    container.innerHTML = '<div class="empty-state"><span class="icon">🌳</span>No chapter hierarchy found.</div>';
+    return;
+  }
+  container.innerHTML = chapters.map((ch, ci) => `
+    <div style="margin-bottom:14px;background:#fff;border:1px solid var(--border-color);border-radius:10px;padding:12px;">
+      <strong style="font-size:13px;color:var(--navy);">
+        📖 Ch.${ch.number || (ci + 1)}: ${escHtml(ch.title || 'Untitled')}
+      </strong>
+      <div style="margin-top:8px;padding-left:14px;border-left:2px solid var(--purple-light);">
+        ${(ch.lessons || []).map(l => `
+          <div style="font-size:12px;margin-bottom:6px;color:var(--navy-dark);">
+            🔹 <strong>L${l.number || ''}: ${escHtml(l.title || 'General')}</strong>
+            <span style="font-size:10px;color:var(--gray);">(${(l.elements || []).length} elements)</span>
+          </div>`).join('') || '<div style="font-size:11px;color:var(--gray);">No lessons</div>'}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   INGEST PIPELINE
+═══════════════════════════════════════════════════════ */
+async function runIngestPipeline() {
+  if (!selectedFile) return;
+
+  const btn = document.getElementById('startParseBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Parsing…';
+  logClear();
+  logLine('⟳ Uploading: ' + selectedFile.name + ' (' + (selectedFile.size / 1024).toFixed(1) + ' KB)', 'info');
+
+  const ocrEngine = document.getElementById('ocrEngineSelect').value;
+  const gmKey     = document.getElementById('openrouterApiKey').value.trim();
+  const gmModel   = document.getElementById('openrouterModelSelect') ? document.getElementById('openrouterModelSelect').value : '';
+
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+  formData.append('parsing_mode', 'auto');
+  formData.append('ocr_engine', ocrEngine);
+
+  if (gmKey)   formData.append('openrouter_api_key', gmKey);
+  if (gmModel) formData.append('openrouter_model', gmModel);
+
+  try {
+    logLine('⟳ Running pipeline (may take 1–5 min for large scanned PDFs)…', 'info');
+    const res    = await fetch('/api/v1/storage/ingest', { method: 'POST', body: formData });
+    const result = await res.json();
+
+    if (res.ok && result.success) {
+      const rec = result.record || {};
+      logLine(`✓ Done! Parser: ${rec.parser_used || '?'} · Lang: ${(rec.language||'?').toUpperCase()}`, 'ok');
+      logLine(`✓ ${rec.num_pages || 0} pages · Quality: ${rec.quality_status || '?'}`, 'ok');
+      await loadLibrary();
+      await selectBook(rec.book_id);
+    } else {
+      const detail = result.detail || result.message || JSON.stringify(result);
+      logLine('✗ Error: ' + detail, 'err');
+    }
+  } catch (err) {
+    logLine('✗ Request failed: ' + err.message, 'err');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>⚡ Start Parsing</span>';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   DELETE BOOK
+═══════════════════════════════════════════════════════ */
+async function deleteActiveBook() {
+  if (!activeBookId) return;
+  const name = document.getElementById('metaDocTitle').innerText;
+  if (!confirm(`Delete "${name}" from the registry?\n\nThis removes all stored artifacts.`)) return;
+
+  try {
+    const res = await fetch(`/api/v1/storage/book/${activeBookId}`, { method: 'DELETE' });
+    if (res.ok) {
+      activeBookId   = null;
+      activeBookData = null;
+      document.getElementById('deleteBookBtn').disabled = true;
+      document.getElementById('activeBookTitle').innerText = 'No document selected';
+      clearRightPanel();
+      await loadLibrary();
+    } else {
+      const d = await res.json();
+      alert('Delete failed: ' + (d.detail || 'Unknown error'));
+    }
+  } catch (err) {
+    alert('Delete failed: ' + err.message);
+  }
+}
+
+function clearRightPanel() {
+  ['metaDocTitle','metaSubjectGrade','metaLanguage','metaParser',
+   'metaDocType','metaPages','metaChapters','metaQuality','metaSha'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '—';
+  });
+  document.getElementById('qualityMetricsBox').innerHTML =
+    '<div style="font-size:11.5px;color:var(--gray);">Select a document to inspect quality report.</div>';
+  document.getElementById('markdownView').innerText = 'No markdown loaded.';
+  document.getElementById('rawJsonView').innerText  = '{}';
+  document.getElementById('treeContainer').innerHTML =
+    '<div class="empty-state"><span class="icon">🌳</span>No educational document loaded.</div>';
+  document.getElementById('activeBookTitle').innerText = 'No document selected';
+}
+
+/* ═══════════════════════════════════════════════════════
+   TABS  — receives the click event directly
+═══════════════════════════════════════════════════════ */
+function switchTab(evt, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b     => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  evt.currentTarget.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════
+   DOWNLOADS
+═══════════════════════════════════════════════════════ */
+function dlFile(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function downloadActiveEdoc() {
+  if (!activeBookData) return;
+  dlFile(JSON.stringify(activeBookData.educational_document || {}, null, 2), `${activeBookId}_edoc.json`, 'application/json');
+}
+function downloadActiveMarkdown() {
+  if (!activeBookData) return;
+  dlFile(activeBookData.raw_markdown || '', `${activeBookId}.md`, 'text/markdown');
+}
+function downloadActiveRagMarkdown() {
+  if (!activeBookData) return;
+  dlFile(activeBookData.rag_markdown || '', `${activeBookId}.rag.md`, 'text/markdown');
+}
+
+/* ═══════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════ */
+function escHtml(text) {
+  return String(text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function isArabicDominant(text) {
+  if (!text) return false;
+  const ar = (text.match(/[\u0600-\u06FF]/g) || []).length;
+  const la = (text.match(/[a-zA-Z]/g) || []).length;
+  return ar > la;
+}
+</script>
+</body>
+</html>

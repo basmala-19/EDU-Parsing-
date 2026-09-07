@@ -1,0 +1,34 @@
+{
+  "content_faithfulness": {
+    "status": "PASS",
+    "detail": "4410/4490 source tokens preserved (98%)"
+  },
+  "table_preservation": {
+    "status": "PASS",
+    "detail": "240/227 tables detected"
+  },
+  "semantic_formatting": {
+    "status": "PASS",
+    "detail": "all 261 headings have valid text and level"
+  },
+  "metadata_completeness": {
+    "status": "PASS",
+    "detail": "3643/3643 elements have full metadata (chapter + lesson + parser)"
+  },
+  "reading_order": {
+    "status": "PASS",
+    "detail": "page order is non-decreasing"
+  },
+  "ocr_confidence": {
+    "status": "PASS",
+    "detail": "no OCR confidence data to validate"
+  },
+  "page_coverage": {
+    "status": "PASS",
+    "detail": "all 202 source pages have at least one element"
+  },
+  "structured_table_rows": {
+    "status": "PASS",
+    "detail": "234/240 tables contain structured rows (98%)"
+  }
+}

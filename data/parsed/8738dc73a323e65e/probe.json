@@ -1,0 +1,275 @@
+{
+  "file": "C:\\Users\\CS\\AppData\\Local\\Temp\\edu2_rag_api_yygkga2t\\Biology_ARABIC_Sec3-1-60-1-52.pdf",
+  "num_pages": 52,
+  "avg_chars_per_page": 0.4,
+  "is_born_digital": false,
+  "image_count": 56,
+  "distinct_font_sizes": 1,
+  "likely_has_headings": false,
+  "text_block_count": 2,
+  "likely_has_complex_layout": false,
+  "route": "ocr_parser",
+  "probe_time_seconds": 0.5092,
+  "per_page": [
+    {
+      "page": 1,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 2,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 3,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 4,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 5,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 6,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 7,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 8,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 9,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 10,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 11,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 12,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 13,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 14,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 15,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 16,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 17,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 18,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 19,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 20,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 21,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 22,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 23,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 24,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 25,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 26,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 27,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 28,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 29,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 30,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 31,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 32,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 33,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 34,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 35,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 36,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 37,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 38,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 39,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 40,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 41,
+      "chars": 13,
+      "blocks": 1
+    },
+    {
+      "page": 42,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 43,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 44,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 45,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 46,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 47,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 48,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 49,
+      "chars": 10,
+      "blocks": 1
+    },
+    {
+      "page": 50,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 51,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 52,
+      "chars": 0,
+      "blocks": 0
+    }
+  ]
+}

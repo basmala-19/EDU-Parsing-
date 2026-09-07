@@ -1,0 +1,850 @@
+{
+  "file": "C:\\Users\\CS\\AppData\\Local\\Temp\\edu2_rag_api_ow_iovht\\Biology_ARABIC_Sec3.pdf",
+  "num_pages": 167,
+  "avg_chars_per_page": 0.3,
+  "is_born_digital": false,
+  "image_count": 172,
+  "distinct_font_sizes": 2,
+  "likely_has_headings": true,
+  "text_block_count": 3,
+  "likely_has_complex_layout": false,
+  "route": "ocr_parser",
+  "probe_time_seconds": 1.1024,
+  "per_page": [
+    {
+      "page": 1,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 2,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 3,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 4,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 5,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 6,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 7,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 8,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 9,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 10,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 11,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 12,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 13,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 14,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 15,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 16,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 17,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 18,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 19,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 20,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 21,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 22,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 23,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 24,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 25,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 26,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 27,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 28,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 29,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 30,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 31,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 32,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 33,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 34,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 35,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 36,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 37,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 38,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 39,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 40,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 41,
+      "chars": 13,
+      "blocks": 1
+    },
+    {
+      "page": 42,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 43,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 44,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 45,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 46,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 47,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 48,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 49,
+      "chars": 10,
+      "blocks": 1
+    },
+    {
+      "page": 50,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 51,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 52,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 53,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 54,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 55,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 56,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 57,
+      "chars": 24,
+      "blocks": 1
+    },
+    {
+      "page": 58,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 59,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 60,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 61,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 62,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 63,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 64,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 65,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 66,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 67,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 68,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 69,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 70,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 71,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 72,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 73,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 74,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 75,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 76,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 77,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 78,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 79,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 80,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 81,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 82,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 83,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 84,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 85,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 86,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 87,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 88,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 89,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 90,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 91,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 92,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 93,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 94,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 95,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 96,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 97,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 98,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 99,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 100,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 101,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 102,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 103,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 104,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 105,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 106,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 107,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 108,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 109,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 110,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 111,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 112,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 113,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 114,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 115,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 116,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 117,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 118,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 119,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 120,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 121,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 122,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 123,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 124,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 125,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 126,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 127,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 128,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 129,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 130,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 131,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 132,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 133,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 134,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 135,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 136,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 137,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 138,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 139,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 140,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 141,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 142,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 143,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 144,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 145,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 146,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 147,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 148,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 149,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 150,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 151,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 152,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 153,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 154,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 155,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 156,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 157,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 158,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 159,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 160,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 161,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 162,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 163,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 164,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 165,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 166,
+      "chars": 0,
+      "blocks": 0
+    },
+    {
+      "page": 167,
+      "chars": 0,
+      "blocks": 0
+    }
+  ]
+}

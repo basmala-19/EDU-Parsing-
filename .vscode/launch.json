@@ -1,0 +1,61 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FastAPI Server (API & Console)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "api_main:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+        "--reload"
+      ],
+      "jinja": true,
+      "env": {
+        "PYTHONPATH": "."
+      }
+    },
+    {
+      "name": "Streamlit App (Parse Studio)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": [
+        "run",
+        "app.py"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    },
+    {
+      "name": "Pipeline CLI (Test Document)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/pipeline.py",
+      "args": [
+        "test_docs/scanned.pdf",
+        "--chunks"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    },
+    {
+      "name": "Run Pytest Suite",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "-q"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  ]
+}
