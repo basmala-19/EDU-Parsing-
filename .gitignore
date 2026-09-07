@@ -3,7 +3,6 @@
 __pycache__/
 .pytest_cache/
 tests/.generated/
-artifacts/
 ocr_output_ar.txt
 test_docs/*.pdf
 benchmark/reference/
