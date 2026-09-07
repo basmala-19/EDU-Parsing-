@@ -59,22 +59,22 @@ The parser chain is selected dynamically from the document's internal structure:
 
 ---
 
-## 🛠️ Step-by-Step Setup & Running Guide
+## Setup and Running Guide
 
-### 1. Environment Setup
+### 1. Install the Environment
 
-#### Option A: Using Conda (Recommended)
+#### Option A: Conda (Recommended)
 ```bash
 conda env create -f environment.yml
 conda activate edu2-rag
 ```
 
-#### Option B: Using Pip & Virtualenv
+#### Option B: Python Virtual Environment
 ```bash
 python -m venv venv
-# On Windows:
+# Windows PowerShell:
 .\venv\Scripts\activate
-# On Linux/Mac:
+# Linux/macOS:
 source venv/bin/activate
 
 pip install -r requirements.txt
@@ -82,11 +82,14 @@ pip install -r requirements.txt
 
 ---
 
-### 2. Configuration (`.env`)
+### 2. Configure Environment Variables
 
-Copy `.env.example` to `.env` and configure your keys:
+Copy `.env.example` to `.env`, then add any optional API keys:
 
 ```bash
+# Windows PowerShell:
+Copy-Item .env.example .env
+# Linux/macOS:
 cp .env.example .env
 ```
 
@@ -102,7 +105,7 @@ LLAMA_CLOUD_API_KEY=your_llamacloud_key_here
 
 ---
 
-### 3. Running the FastAPI Backend Service
+### 3. Start the FastAPI Backend
 
 Run the REST API server to integrate with your RAG pipeline or backend:
 
@@ -120,7 +123,7 @@ uvicorn api_main:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-### 4. Running the Streamlit Visual Studio
+### 4. Start the Streamlit Review Studio
 
 Launch the interactive review studio to visually inspect PDF pages synchronized with Markdown and RAG Chunks:
 
@@ -132,9 +135,8 @@ Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
-### 5. CLI Usage & Python Integration
+### 5. Run the Pipeline from the CLI
 
-#### CLI Command:
 ```bash
 python pipeline.py "path/to/book.pdf" --chunks
 ```
@@ -163,10 +165,9 @@ for chunk in chunks[:3]:
 
 ---
 
-### 6. Running Test Suite
+### 6. Run the Test Suite
 
 ```bash
 python -m pytest -q
 ```
-All 127 unit and integration tests validate language routing, image extraction, bidi handling, and chunking integrity.
-# EDU-Parsing-
+The test suite covers language routing, image extraction, bidirectional text handling, and chunking integrity.
